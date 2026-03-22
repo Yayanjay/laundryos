@@ -10,7 +10,7 @@
 | Phase | Name | Status | Progress |
 |-------|------|--------|----------|
 | 0 | Project Setup | DONE | 100% |
-| 1 | Foundation | IN_PROGRESS | 6% |
+| 1 | Foundation | IN_PROGRESS | 26% |
 | 2 | Core Features | TODO | 0% |
 | 3 | Payments | TODO | 0% |
 | 4 | Analytics | TODO | 0% |
