@@ -5,6 +5,7 @@ import (
 	"log"
 
 	"github.com/gin-gonic/gin"
+	"github.com/laundryos/backend/internal/api/middleware"
 	"github.com/laundryos/backend/pkg/config"
 	"github.com/laundryos/backend/pkg/database"
 )
@@ -24,7 +25,10 @@ func main() {
 	fmt.Println("Connected to database successfully!")
 
 	gin.SetMode(gin.ReleaseMode)
-	r := gin.Default()
+	r := gin.New()
+	r.Use(gin.Recovery())
+	r.Use(middleware.TraceID())
+	r.Use(middleware.Logger())
 
 	r.GET("/health", func(c *gin.Context) {
 		c.JSON(200, gin.H{"status": "ok"})

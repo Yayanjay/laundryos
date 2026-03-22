@@ -63,10 +63,10 @@
 | # | Task | Status | Priority | Estimate |
 |---|------|--------|----------|----------|
 | 1.1.1 | Create API response struct (pkg/apiresponse) | DONE | HIGH | 1h |
-| 1.1.2 | Implement Success response helper | TODO | HIGH | 30m |
-| 1.1.3 | Implement Error response helper | TODO | HIGH | 30m |
-| 1.1.4 | Implement Pagination helper | TODO | HIGH | 1h |
-| 1.1.5 | Implement Trace ID middleware | TODO | HIGH | 1h |
+| 1.1.2 | Implement Success response helper | DONE | HIGH | 30m |
+| 1.1.3 | Implement Error response helper | DONE | HIGH | 30m |
+| 1.1.4 | Implement Pagination helper | DONE | HIGH | 1h |
+| 1.1.5 | Implement Trace ID middleware | DONE | HIGH | 1h |
 
 ### 1.2 JWT & Auth
 | # | Task | Status | Priority | Estimate |
