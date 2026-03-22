@@ -10,7 +10,7 @@
 | Phase | Name | Status | Progress |
 |-------|------|--------|----------|
 | 0 | Project Setup | DONE | 100% |
-| 1 | Foundation | TODO | 0% |
+| 1 | Foundation | IN_PROGRESS | 6% |
 | 2 | Core Features | TODO | 0% |
 | 3 | Payments | TODO | 0% |
 | 4 | Analytics | TODO | 0% |
@@ -62,7 +62,7 @@
 ### 1.1 API Response Package
 | # | Task | Status | Priority | Estimate |
 |---|------|--------|----------|----------|
-| 1.1.1 | Create API response struct (pkg/apiresponse) | TODO | HIGH | 1h |
+| 1.1.1 | Create API response struct (pkg/apiresponse) | DONE | HIGH | 1h |
 | 1.1.2 | Implement Success response helper | TODO | HIGH | 30m |
 | 1.1.3 | Implement Error response helper | TODO | HIGH | 30m |
 | 1.1.4 | Implement Pagination helper | TODO | HIGH | 1h |
