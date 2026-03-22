@@ -37,8 +37,10 @@ func main() {
 	authHandler := handlers.NewAuthHandler(authService)
 
 	userService := service.NewUserService(db)
+	userHandler := handlers.NewUserHandler(userService)
+
 	tenantService := service.NewTenantService(db)
-	settingsHandler := handlers.NewSettingsHandler(tenantService, userService)
+	settingsHandler := handlers.NewSettingsHandler(tenantService)
 
 	gin.SetMode(gin.ReleaseMode)
 	r := gin.New()
@@ -61,6 +63,7 @@ func main() {
 			auth.GET("/me", middleware.Auth(jwtManager), authHandler.Me)
 		}
 
+		userHandler.RegisterRoutes(api, jwtManager)
 		settingsHandler.RegisterRoutes(api, jwtManager)
 	}
 
