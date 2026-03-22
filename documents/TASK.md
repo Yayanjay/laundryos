@@ -10,7 +10,7 @@
 | Phase | Name | Status | Progress |
 |-------|------|--------|----------|
 | 0 | Project Setup | DONE | 100% |
-| 1 | Foundation | IN_PROGRESS | 26% |
+| 1 | Foundation | IN_PROGRESS | 58% |
 | 2 | Core Features | TODO | 0% |
 | 3 | Payments | TODO | 0% |
 | 4 | Analytics | TODO | 0% |
@@ -81,11 +81,11 @@
 ### 1.3 Auth Handler & Routes
 | # | Task | Status | Priority | Estimate |
 |---|------|--------|----------|----------|
-| 1.3.1 | POST /api/v1/auth/register | TODO | HIGH | 3h |
-| 1.3.2 | POST /api/v1/auth/login | TODO | HIGH | 3h |
-| 1.3.3 | POST /api/v1/auth/refresh | TODO | HIGH | 2h |
-| 1.3.4 | POST /api/v1/auth/logout | TODO | HIGH | 1h |
-| 1.3.5 | GET /api/v1/auth/me | TODO | HIGH | 1h |
+| 1.3.1 | POST /api/v1/auth/register | DONE | HIGH | 3h |
+| 1.3.2 | POST /api/v1/auth/login | DONE | HIGH | 3h |
+| 1.3.3 | POST /api/v1/auth/refresh | DONE | HIGH | 2h |
+| 1.3.4 | POST /api/v1/auth/logout | DONE | HIGH | 1h |
+| 1.3.5 | GET /api/v1/auth/me | DONE | HIGH | 1h |
 
 ### 1.4 User Management
 | # | Task | Status | Priority | Estimate |
