@@ -71,12 +71,12 @@
 ### 1.2 JWT & Auth
 | # | Task | Status | Priority | Estimate |
 |---|------|--------|----------|----------|
-| 1.2.1 | Create JWT package (pkg/jwt) | TODO | HIGH | 2h |
-| 1.2.2 | Implement token generation (access + refresh) | TODO | HIGH | 2h |
-| 1.2.3 | Implement token validation | TODO | HIGH | 1h |
-| 1.2.4 | Implement refresh token rotation | TODO | HIGH | 2h |
-| 1.2.5 | Create auth middleware | TODO | HIGH | 2h |
-| 1.2.6 | Create tenant context middleware | TODO | HIGH | 2h |
+| 1.2.1 | Create JWT package (pkg/jwt) | DONE | HIGH | 2h |
+| 1.2.2 | Implement token generation (access + refresh) | DONE | HIGH | 2h |
+| 1.2.3 | Implement token validation | DONE | HIGH | 1h |
+| 1.2.4 | Implement refresh token rotation | DONE | HIGH | 2h |
+| 1.2.5 | Create auth middleware | DONE | HIGH | 2h |
+| 1.2.6 | Create tenant context middleware | DONE | HIGH | 2h |
 
 ### 1.3 Auth Handler & Routes
 | # | Task | Status | Priority | Estimate |

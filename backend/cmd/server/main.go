@@ -5,9 +5,12 @@ import (
 	"log"
 
 	"github.com/gin-gonic/gin"
+	"github.com/laundryos/backend/internal/api/handlers"
 	"github.com/laundryos/backend/internal/api/middleware"
+	"github.com/laundryos/backend/internal/service"
 	"github.com/laundryos/backend/pkg/config"
 	"github.com/laundryos/backend/pkg/database"
+	"github.com/laundryos/backend/pkg/jwt"
 )
 
 func main() {
@@ -24,6 +27,15 @@ func main() {
 
 	fmt.Println("Connected to database successfully!")
 
+	jwtManager := jwt.NewJWTManager(
+		cfg.JWT.Secret,
+		cfg.JWT.AccessExpiry,
+		cfg.JWT.RefreshExpiry,
+	)
+
+	authService := service.NewAuthService(db, jwtManager)
+	authHandler := handlers.NewAuthHandler(authService)
+
 	gin.SetMode(gin.ReleaseMode)
 	r := gin.New()
 	r.Use(gin.Recovery())
@@ -34,9 +46,17 @@ func main() {
 		c.JSON(200, gin.H{"status": "ok"})
 	})
 
-	r.GET("/", func(c *gin.Context) {
-		c.JSON(200, gin.H{"message": "LaundryOS API"})
-	})
+	api := r.Group("/api/v1")
+	{
+		auth := api.Group("/auth")
+		{
+			auth.POST("/register", authHandler.Register)
+			auth.POST("/login", authHandler.Login)
+			auth.POST("/refresh", authHandler.Refresh)
+			auth.POST("/logout", authHandler.Logout)
+			auth.GET("/me", middleware.Auth(jwtManager), authHandler.Me)
+		}
+	}
 
 	fmt.Printf("Server starting on port %s\n", cfg.Server.Port)
 	if err := r.Run(":" + cfg.Server.Port); err != nil {
