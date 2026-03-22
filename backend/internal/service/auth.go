@@ -171,16 +171,12 @@ func (s *AuthService) Login(ctx context.Context, req *LoginRequest) (*AuthRespon
 		return nil, err
 	}
 
-	refreshToken := &domain.RefreshToken{
-		UserID:    user.ID,
-		TokenHash: jwt.HashToken(tokenPair.RefreshToken),
-		ExpiresAt: time.Now().Add(time.Hour * 24 * 7),
-	}
+	refreshTokenHash := jwt.HashToken(tokenPair.RefreshToken)
 	refreshQuery := `
 		INSERT INTO refresh_tokens (user_id, token_hash, expires_at, is_revoked)
 		VALUES ($1, $2, $3, false)
 	`
-	_, err = s.db.ExecContext(ctx, refreshQuery, refreshToken.UserID, refreshToken.TokenHash, refreshToken.ExpiresAt)
+	_, err = s.db.ExecContext(ctx, refreshQuery, user.ID, refreshTokenHash, time.Now().Add(time.Hour*24*7))
 	if err != nil {
 		return nil, err
 	}
@@ -197,9 +193,13 @@ func (s *AuthService) RefreshToken(ctx context.Context, refreshToken string) (*A
 	tokenHash := jwt.HashToken(refreshToken)
 
 	var storedToken domain.RefreshToken
-	query := `SELECT * FROM refresh_tokens WHERE token_hash = $1 AND is_revoked = false`
+	query := `SELECT id, user_id, token_hash, expires_at, is_revoked, created_at FROM refresh_tokens WHERE token_hash = $1`
 	err := s.db.GetContext(ctx, &storedToken, query, tokenHash)
 	if err != nil {
+		return nil, ErrInvalidCredentials
+	}
+
+	if storedToken.IsRevoked {
 		return nil, ErrInvalidCredentials
 	}
 
@@ -218,34 +218,36 @@ func (s *AuthService) RefreshToken(ctx context.Context, refreshToken string) (*A
 	}
 
 	var user domain.User
-	userQuery := `SELECT * FROM users WHERE id = $1`
+	userQuery := `SELECT id, tenant_id, name, email, password_hash, role, is_active, created_at, updated_at FROM users WHERE id = $1`
 	err = s.db.GetContext(ctx, &user, userQuery, claims.UserID)
 	if err != nil {
 		return nil, ErrUserNotFound
 	}
 
 	var tenant domain.Tenant
-	tenantQuery := `SELECT * FROM tenants WHERE id = $1`
-	err = s.db.GetContext(ctx, &tenant, tenantQuery, claims.TenantID)
+	var address, logoURL string
+	tenantQuery := `SELECT id, name, subdomain, phone, COALESCE(address, ''), COALESCE(logo_url, ''), plan, is_active, created_at, updated_at FROM tenants WHERE id = $1`
+	err = s.db.QueryRowContext(ctx, tenantQuery, claims.TenantID).Scan(
+		&tenant.ID, &tenant.Name, &tenant.Subdomain, &tenant.Phone,
+		&address, &logoURL, &tenant.Plan, &tenant.IsActive, &tenant.CreatedAt, &tenant.UpdatedAt,
+	)
 	if err != nil {
 		return nil, ErrUserNotFound
 	}
+	tenant.Address = address
+	tenant.LogoURL = logoURL
 
 	tokenPair, err := s.jwtManager.GenerateTokenPair(user.ID, tenant.ID, user.Role)
 	if err != nil {
 		return nil, err
 	}
 
-	newRefreshToken := &domain.RefreshToken{
-		UserID:    user.ID,
-		TokenHash: jwt.HashToken(tokenPair.RefreshToken),
-		ExpiresAt: time.Now().Add(time.Hour * 24 * 7),
-	}
+	newRefreshTokenHash := jwt.HashToken(tokenPair.RefreshToken)
 	refreshQuery := `
 		INSERT INTO refresh_tokens (user_id, token_hash, expires_at, is_revoked)
 		VALUES ($1, $2, $3, false)
 	`
-	_, err = s.db.ExecContext(ctx, refreshQuery, newRefreshToken.UserID, newRefreshToken.TokenHash, newRefreshToken.ExpiresAt)
+	_, err = s.db.ExecContext(ctx, refreshQuery, user.ID, newRefreshTokenHash, time.Now().Add(time.Hour*24*7))
 	if err != nil {
 		return nil, err
 	}
@@ -266,7 +268,7 @@ func (s *AuthService) Logout(ctx context.Context, refreshToken string) error {
 
 func (s *AuthService) GetCurrentUser(ctx context.Context, userID string) (*domain.User, error) {
 	var user domain.User
-	query := `SELECT * FROM users WHERE id = $1`
+	query := `SELECT id, tenant_id, name, email, password_hash, role, is_active, created_at, updated_at FROM users WHERE id = $1`
 	err := s.db.GetContext(ctx, &user, query, userID)
 	if err != nil {
 		return nil, ErrUserNotFound
