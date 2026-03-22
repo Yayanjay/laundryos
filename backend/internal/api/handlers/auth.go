@@ -7,6 +7,7 @@ import (
 	"github.com/laundryos/backend/internal/api/middleware"
 	"github.com/laundryos/backend/internal/service"
 	"github.com/laundryos/backend/pkg/apiresponse"
+	"github.com/laundryos/backend/pkg/jwt"
 )
 
 type AuthHandler struct {
@@ -15,6 +16,17 @@ type AuthHandler struct {
 
 func NewAuthHandler(authService *service.AuthService) *AuthHandler {
 	return &AuthHandler{authService: authService}
+}
+
+func (h *AuthHandler) RegisterRoutes(r *gin.RouterGroup, jwtManager *jwt.JWTManager) {
+	auth := r.Group("/auth")
+	{
+		auth.POST("/register", h.Register)
+		auth.POST("/login", h.Login)
+		auth.POST("/refresh", h.Refresh)
+		auth.POST("/logout", h.Logout)
+		auth.GET("/me", middleware.Auth(jwtManager), h.Me)
+	}
 }
 
 func (h *AuthHandler) Register(c *gin.Context) {

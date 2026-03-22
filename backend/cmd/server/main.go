@@ -54,15 +54,7 @@ func main() {
 
 	api := r.Group("/api/v1")
 	{
-		auth := api.Group("/auth")
-		{
-			auth.POST("/register", authHandler.Register)
-			auth.POST("/login", authHandler.Login)
-			auth.POST("/refresh", authHandler.Refresh)
-			auth.POST("/logout", authHandler.Logout)
-			auth.GET("/me", middleware.Auth(jwtManager), authHandler.Me)
-		}
-
+		authHandler.RegisterRoutes(api, jwtManager)
 		userHandler.RegisterRoutes(api, jwtManager)
 		settingsHandler.RegisterRoutes(api, jwtManager)
 	}
