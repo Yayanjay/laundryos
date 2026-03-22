@@ -10,7 +10,7 @@
 | Phase | Name | Status | Progress |
 |-------|------|--------|----------|
 | 0 | Project Setup | DONE | 100% |
-| 1 | Foundation | IN_PROGRESS | 89% |
+| 1 | Foundation | DONE | 100% |
 | 2 | Core Features | TODO | 0% |
 | 3 | Payments | TODO | 0% |
 | 4 | Analytics | TODO | 0% |
@@ -100,9 +100,9 @@
 ### 1.5 Tenant Settings
 | # | Task | Status | Priority | Estimate |
 |---|------|--------|----------|----------|
-| 1.5.1 | Tenant repository | TODO | HIGH | 2h |
-| 1.5.2 | GET /api/v1/settings | TODO | HIGH | 1h |
-| 1.5.3 | PUT /api/v1/settings | TODO | HIGH | 2h |
+| 1.5.1 | Tenant repository | DONE | HIGH | 2h |
+| 1.5.2 | GET /api/v1/settings | DONE | HIGH | 1h |
+| 1.5.3 | PUT /api/v1/settings | DONE | HIGH | 2h |
 
 ---
 
