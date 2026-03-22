@@ -36,6 +36,9 @@ func main() {
 	authService := service.NewAuthService(db, jwtManager)
 	authHandler := handlers.NewAuthHandler(authService)
 
+	userService := service.NewUserService(db)
+	userHandler := handlers.NewUserHandler(userService)
+
 	gin.SetMode(gin.ReleaseMode)
 	r := gin.New()
 	r.Use(gin.Recovery())
@@ -56,6 +59,8 @@ func main() {
 			auth.POST("/logout", authHandler.Logout)
 			auth.GET("/me", middleware.Auth(jwtManager), authHandler.Me)
 		}
+
+		userHandler.RegisterRoutes(api, jwtManager)
 	}
 
 	fmt.Printf("Server starting on port %s\n", cfg.Server.Port)

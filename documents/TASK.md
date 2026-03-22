@@ -10,7 +10,7 @@
 | Phase | Name | Status | Progress |
 |-------|------|--------|----------|
 | 0 | Project Setup | DONE | 100% |
-| 1 | Foundation | IN_PROGRESS | 58% |
+| 1 | Foundation | IN_PROGRESS | 89% |
 | 2 | Core Features | TODO | 0% |
 | 3 | Payments | TODO | 0% |
 | 4 | Analytics | TODO | 0% |
@@ -90,12 +90,12 @@
 ### 1.4 User Management
 | # | Task | Status | Priority | Estimate |
 |---|------|--------|----------|----------|
-| 1.4.1 | User repository (CRUD) | TODO | HIGH | 3h |
-| 1.4.2 | User service layer | TODO | HIGH | 2h |
-| 1.4.3 | GET /api/v1/users | TODO | HIGH | 1h |
-| 1.4.4 | POST /api/v1/users | TODO | HIGH | 2h |
-| 1.4.5 | PUT /api/v1/users/:id | TODO | HIGH | 2h |
-| 1.4.6 | DELETE /api/v1/users/:id | TODO | HIGH | 1h |
+| 1.4.1 | User repository (CRUD) | DONE | HIGH | 3h |
+| 1.4.2 | User service layer | DONE | HIGH | 2h |
+| 1.4.3 | GET /api/v1/users | DONE | HIGH | 1h |
+| 1.4.4 | POST /api/v1/users | DONE | HIGH | 2h |
+| 1.4.5 | PUT /api/v1/users/:id | DONE | HIGH | 2h |
+| 1.4.6 | DELETE /api/v1/users/:id | DONE | HIGH | 1h |
 
 ### 1.5 Tenant Settings
 | # | Task | Status | Priority | Estimate |
